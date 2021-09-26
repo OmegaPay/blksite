@@ -6,6 +6,9 @@ app.get("/api", (req, res) => {
   res.json({ message: "running..." });
 });
 
+app.get("/", (req, res) => {
+  res.json({ message: "NFT Thingo running :P" });
+});
 
 
 app.get("/0", (req, res) => {
