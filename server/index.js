@@ -10,6 +10,9 @@ app.get("/", (req, res) => {
   res.json({ message: "NFT Thingo running :P", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
 });
 
+app.get("/example/blockarcade", (req, res) => {
+  res.json(image: "https://cloudflare-ipfs.com/ipfs/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", id: "X", name: "Cabinet X", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
+}
 
 app.get("/0", (req, res) => {
   res.json({ image: "https://cloudflare-ipfs.com/ipfs/Qmbhr6i2KBPReiG7HqFMXsiRvFMoESPfcxt7padn3mb7bR", id: "0", name: "Cabinet 1", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
