@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/example/blockarcade", (req, res) => {
-  res.json(image: "https://cloudflare-ipfs.com/ipfs/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", id: "X", name: "Cabinet X", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
+  res.json({ image: "https://cloudflare-ipfs.com/ipfs/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", id: "X", name: "Cabinet X", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
 }
 
 app.get("/0", (req, res) => {
