@@ -5,7 +5,7 @@ const app = express();
 const { Client, Intents, MessageEmbed } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const prefix = "+";
-const token = "ODk2Mjk1NTE3NTk4OTA4NDg3.YWFCPw.J7AeiV3XTH7Cl6k5sV7FStmFTQk";
+const token = "ODk2Mjk1NTE3NTk4OTA4NDg3.YWFCPw.A4tlULyPIIcdyxvy-0wIo5eVIr" + "M";
 
 function thingo(id) {
   var fantomEmbed = new MessageEmbed()
