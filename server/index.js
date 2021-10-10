@@ -2,6 +2,88 @@
 const express = require("express");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const { Client, Intents, MessageEmbed } = require('discord.js');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const prefix = "+";
+const token = "ODk2Mjk1NTE3NTk4OTA4NDg3.YWFCPw.J7AeiV3XTH7Cl6k5sV7FStmFTQk";
+
+function thingo(id) {
+  var fantomEmbed = new MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('Fantom #' + id)
+	.setURL('https://fantoms.art/')
+	.setDescription('A cute little ghost')
+	.setImage('https://mint.fantoms.art/imagesa/'+id+'.png')
+	.setTimestamp()
+
+  return fantomEmbed;
+}
+
+function cyberthingo(id) {
+  var fantomEmbed = new MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('Cyber Fantom #' + id)
+	.setURL('https://cyber.fantoms.art/')
+	.setDescription('A hardcore cyberpunk ghost. And it\'s not a phase.')
+	.setImage('https://raw.githubusercontent.com/Pokesi/blksite/main/images/'+id+'.png')
+	.setTimestamp()
+
+  return fantomEmbed;
+}
+
+let interval;
+client.on('message', async msg => {
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  switch (command) {
+    case "fantom":
+      var id2 = args[0];
+      var temp = thingo(id2);
+      msg.channel.send({ embeds: [temp] });
+      break;
+    case "cyber":
+      var id3 = args[0];
+      var temp = cyberthingo(id3);
+      msg.channel.send({ embeds: [temp] });
+      break;
+    case "rarity":
+      var eyes = args[1];
+      var mouth = args[2];
+      try {
+          var bg = args[3].toLowerCase();
+      } catch {
+          var bg = "none";
+      }
+      var rarity = 0.2;
+      if (eyes == "1" || eyes == "10") { rarity = 0.15 } else { rarity = 0.1 };
+      if (mouth == "7") {rarity += 0.1} else {rarity += 0.15};
+      switch (bg) {
+              case "city": 
+                rarity += 0.4;
+              case "motel":
+                rarity += 0.2;
+              case "lake":
+                rarity += 0.1;
+              case "bridge":
+                rarity += 0.1;
+              case "clouds":
+                rarity += 0.07;
+              case "kitten":
+                rarity += 0.03;
+              case "none":
+                rarity += 0;
+      }
+      msg.channel.send("Your rarity is: " + rarity.toString() + ". Remember; the lower the better!");
+      break;
+    case "help":
+      msg.channel.send("Currently supported commands: \n `+fantom [id]` - get info about FTMOPR #[id] \n `+cyber [id]` - get info about CYBER #[id] \n `+rarity [body] [eyes] [mouth] [CYBER ONLY:background]` - get the rarity of your FTMOPR/CYBER see `+rarityinfo` \n `+rarityinfo` - get info about the rarity calculation process");
+      break;
+    case "rarityinfo":
+      msg.channel.send("Body aliases: the [body] in `+rarity` should just be the color of the body \n [eyes] should be the ID number of the eyes. The IDs can be found here https://github.com/fantomsopera/generate/. \n [mouth] can be found in the same way. \n [background] should be the closest one you can find in #rarity.");
+      break;
+  }
+});
+
 app.get("/api", (req, res) => {
   res.json({ message: "running...", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
 });
@@ -10,98 +92,10 @@ app.get("/", (req, res) => {
   res.json({ message: "NFT Thingo running :P", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
 });
 
-app.get("/0", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/Qmbhr6i2KBPReiG7HqFMXsiRvFMoESPfcxt7padn3mb7bR", id: "0", name: "Cabinet 1", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/1", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmNPmHAnuW7xGqLtBW9679c1B1yuGMyc4yXTjG1unry2dV", id: "1", name: "Cabinet 2", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/2", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZRBxgm3TSB8vGWwVkhLLvEGavwUKsd1mrGWuYyyc9m6u", id: "2", name: "Cabinet 3", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/3", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZ8U7rnN73LgSE13Wxh7CNcsYH69yiagbN32eo3pH5VmQ", id: "3", name: "Cabinet 4", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/4", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmdvXHJrdSTA9wN1PkLwAJPkQr6GMKcsLMTDZDSc9Z48m8", id: "4", name: "Cabinet 5", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/5", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZRwm6HCAMrUyN4audMmL8FuqqiBpWGy82sRb9vzdr6kt", id: "5", name: "Cabinet 6", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/6", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmaXPSZ2NbVaWNC2uML3eMsvrHaYoLS7zSkS2ufLhpS9C8", id: "6", name: "Cabinet 7", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/7", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmUY9umUUBqVbPJxrUt7ZYmaCkpBfGGbCpaksowvHrZxcU", id: "7", name: "Cabinet 8", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/8", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmPHmhTqxZozTdZUKQ8cD4UErRVyH49LjJnUoHogCv9UWK", id: "8", name: "Cabinet 9", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/9", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmUn4rQNgmB5tiktG4KhWDqTxXvoS8XSEKkJPKhRf9mAUH", id: "9", name: "Cabinet 10", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/10", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmQf3QYj3ah3TBRoxnoW9NRZHhhcGnGeX1oDzbxxyz33tg", id: "10", name: "Cabinet 11", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/11", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZFQgcRDofEdqxzVtfbmCouXWtkfZp9PCG22ctGJ5F8kN", id: "11", name: "Cabinet 12", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/12", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmPxunJTEYGzNo5bd6KddSNAX1QBPgzFnkKyhsmzxmBNuq", id: "12", name: "Cabinet 13", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/13", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmcvWWLgTetMezb3HJUo8X9GJ6SzC8MnVjTqDgrZStg4pV", id: "13", name: "Cabinet 14", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/14", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmU7dv3RBvkckNX3VxdjFXiPmNPzLjXXUrUABeS5k1k4cm", id: "14", name: "Cabinet 15", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/15", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmWHyGLGvFdjueH6FBUhtPCoSMdxaTEw84VE1YVeqb7cZs", id: "15", name: "Cabinet 16", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/16", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmS8rrQfySHTvseuphxYMTtHdTyKXjwk37dcDj3mZhbF7D", id: "16", name: "Cabinet 17", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/17", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmfJxqFMAAvJVx7emRrBqBvTTFMREynHh3NpV3SYRoomgw", id: "17", name: "Cabinet 18", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/18", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZpHcA7UBCAiY3v4G1rGsb1kGYFRT7p4ULozZiVZLaHNz", id: "18", name: "Cabinet 19", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/19", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmZKf6iaQzmCmemKBSA2F9KV8pPJiEHjtEAyWagUCm54e7", id: "19", name: "Cabinet 20", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/20", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmVWCFX2YTB2DgW5onSDF5hSy1CKDEs7F843tn34u4xbLo", id: "20", name: "Cabinet 21", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/21", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmbFKLmQevpyqeoZ5ezrPEecEcaM8xvy6ZNwWcgB9RYvs7", id: "21", name: "Cabinet 22", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/22", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmbGs6MYyfCYcuvPGzSSsjW8g4BT9jxpAg3ZA6wknFLpaa", id: "22", name: "Cabinet 23", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/23", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmYYkkmSVWbhjWz3yxVYkYBQfNE4N14nM7gnQxaaGzqWom", id: "23", name: "Cabinet 24", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/24", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmR44s6yZ9GWunPXTXDgpLuqJUkbZ752bJgZErxvGRNEQa", id: "24", name: "Cabinet 25", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/25", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmTxg25HGYzKEcY2Hd4BSN86bSro5rhjkiyN58QFEtRHUu", id: "25", name: "Cabinet 26", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/26", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/Qmd3R6n92Diw9wmpd82BANa7YMa9TLiW4KDVCWZoe6yVYY", id: "26", name: "Cabinet 27", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/27", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmRYMsyb7uMY6PonQGrkBMeGwZ7GuuFp53PasWJuKpD9aL", id: "27", name: "Cabinet 28", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/28", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmQTptEVxNSqpmYFwKnR9gHLwG6qqzpj5kN2szBB51rsn6", id: "28", name: "Cabinet 29", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-app.get("/29", (req, res) => {
-  res.json({ image: "https://cloudflare-ipfs.com/ipfs/QmUhugabfXjjrmM3qfREB61dUKW2ngZtbDiujDMXdG2yVt", id: "29", name: "Cabinet 30", description: "blockarcade cabinet", attributes: [{trait_type:  "main", value: "cabinet"}] });
-});
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+
+client.login(token);
